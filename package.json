@@ -1,0 +1,9 @@
+{
+  "name": "site-modularizado",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:py": "python build.py"
+  }
+}

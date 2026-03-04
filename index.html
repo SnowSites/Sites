@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  
+  
+  
+  <title>Hells Angels</title>
+  
+  <link rel="stylesheet" href="dist/style.80b2434983.css"> 
+  
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0b0b0f">
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/logo-dark.png">
+
+<style>
+/* --- Fix: logo da tela de boas-vindas/login sem esticar --- */
+#loginLogo, .login-logo img, .auth-logo img, img.login-logo-img {
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px !important;
+  max-height: 180px !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 0 auto 12px auto;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.22));
+}
+</style>
+
+</head>
+<body class="light">
+  
+  <a href="#" id="logoLink">
+    <img id="appLogo" src="assets/img/logo-dark.png" alt="Hells Angels Logo" class="app-logo" width="1037" height="902" decoding="async" fetchpriority="high" loading="eager">
+  </a>
+
+  <div id="welcomeScreen"> 
+      <img id="welcomeLogo" src="assets/img/logo-dark.png" alt="Welcome Logo" width="1037" height="902" decoding="async" fetchpriority="high" loading="eager"> 
+      <h2 style="font-weight: 900;">Bem-vindo(a)</h2>
+      <p style="margin-bottom: 20px; font-size: 16px;">Calculadora e Registro de Vendas Hells Angels</p>
+      <button id="enterBtn" class="primary">Entrar no Site</button>
+  </div>
+  
+  <div class="top-right-controls">
+      <button class="control-btn" id="tutorialBtn">💡 Tutorial</button> 
+      <button class="control-btn" id="themeBtn">🌙 Modo Noturno</button>
+      <button class="control-btn" id="investigacaoBtn" style="display:none; background-color: #0056b3;">🔎 Investigação</button>
+      <button class="control-btn" id="hierarquiaBtn" style="display:none; background-color: #2b2f3a;">📌 Hierarquia</button> 
+  </div>
+
+  <div id="authScreen" class="card" style="max-width: 400px; margin: 100px auto 20px auto; display: none;">
+      <img src="assets/img/logo-dark.png" alt="Hells Angels Logo" class="login-logo" width="1037" height="902" decoding="async" fetchpriority="auto" loading="lazy">
+      <h2>Autenticação de Usuário</h2>
+      <label for="username">Nome de Usuário:</label>
+      <input id="username" type="text" placeholder="Seu nome de usuário">
+      <label for="password">Senha:</label>
+      <input id="password" type="password" placeholder="Sua senha">
+      <div class="actions">
+          <button id="loginBtn" class="primary">Entrar</button>
+          <button id="registerUserBtn" class="muted">Cadastrar</button>
+      </div>
+      <a href="#" id="forgotPasswordLink" style="text-align: center; display: block; margin-top: 15px;">Esqueci a Senha</a>
+      <p id="authMessage" style="color: var(--cor-erro); margin-top: 10px;"></p>
+</div>
+
+  <div class="card" id="mainCard" style="display:none">
+    <div class="header-container">
+        <h1 id="mainTitle">Calculadora e Registro de Vendas</h1>
+        <span id="userStatus" class="user-status-display" style="display:none;"></span>
+        <button id="logoutBtn" class="danger" style="animation: none;">Sair</button>
+    </div>
+    
+    <div class="card-venda">
+        <h2>Dados da Venda</h2>
+        <div class="grid grid-venda">
+            <div>
+                <label for="nomeCliente">Nome:</label>
+                <input id="nomeCliente" type="text" value="">
+            </div>
+            <div>
+                <label for="dataVenda">Data e Horário:</label>
+                <input id="dataVenda" type="text" readonly> 
+            </div>
+            <div>
+                <label for="organizacao">Organização:</label>
+                <input id="organizacao" type="text" value="" list="sugestoesOrganizacao">
+                <p class="suggestion-tip">Digite para ver sugestões de organizações.</p>
+                <datalist id="sugestoesOrganizacao">
+                    <option value="Hells Angels"></option>
+                    <option value="Serpents"></option> <option value="Nox"></option> <option value="NKT"></option> <option value="Nemesis"></option> <option value="Midnight"></option> <option value="Meraki"></option> <option value="Lotus"></option> <option value="Hydra"></option> <option value="Hooligans"></option> <option value="Families"></option> <option value="Cartel"></option> <option value="Blood Street"></option> <option value="Blood Reapers"></option> <option value="Blue Diamond"></option> <option value="Black Heart"></option> <option value="Ballas"></option> <option value="Aura"></option> <option value="Anarquia"></option> <option value="8 Anjo"></option> <option value="Vagos"></option> <option value="Vertice"></option> <option value="Void"></option> <option value="Solo"></option>
+                </datalist>
+            </div>
+            <div>
+                <label for="organizacaoTipo">Opção (CNPJ/CPF):</label>
+                <select id="organizacaoTipo">
+                    <option value="CNPJ">CNPJ (Obrigatório)</option>
+                    <option value="CPF">CPF (Opcional)</option>
+                    <option value="OUTROS">Outros (Opcional)</option>
+                </select>
+            </div>
+            <div>
+                <label for="telefone">Telefone:</label>
+                <input id="telefone" type="text" value="" maxlength="13"> 
+            </div>
+            
+            <div>
+                <label for="negociadoras">Negociadoras:</label>
+                <input id="negociadoras" type="text" value="">
+            </div>
+            
+            <div class="grid-venda-3col">
+                <div>
+                    <label for="carroVeiculo">Carro(s) (Opcional):</label>
+                    <input id="carroVeiculo" type="text" value="">
+                    <p class="suggestion-tip">Separe múltiplos com vírgula.</p>
+                </div>
+                <div>
+                    <label for="placaVeiculo">Placa(s) (Opcional):</label>
+                    <input id="placaVeiculo" type="text" value="">
+                    <p class="suggestion-tip">Separe múltiplos com vírgula.</p>
+                </div>
+                <div>
+                    <label for="vendaValorObs">Cargo:</label>
+                    <input id="vendaValorObs" type="text" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--cor-borda);">
+
+    <h2>Cálculo de Produtos</h2>
+    <p class="small">Informe quantos produtos deseja fabricar/vender e escolha o tipo de valor.</p>
+
+    <div class="grid">
+      <div id="productsContainer" class="products-grid"></div>
+      <div>
+        <label for="tipoValor">Tipo de Valor</label>
+        <select id="tipoValor">
+          <option value="limpo">Dinheiro Limpo</option>
+          <option value="sujo">Dinheiro Sujo</option>
+          <option value="limpo_alianca">Limpo (Aliança)</option>
+          <option value="sujo_alianca">Sujo (Aliança)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="calcBtn" class="primary">Calcular</button>
+      <button id="resetBtn" class="muted">Limpar Campos</button>
+      <button id="registerBtn" class="success">Registrar Venda</button>
+      <button id="toggleHistoryBtn" class="muted">Ver Histórico</button>
+      <button id="csvBtn" class="muted">Exportar CSV</button>
+      <button id="discordBtnCalc" class="muted">Discord</button>
+      <button id="adminPanelBtn" class="muted" style="display:none; background-color: #ffb3d9;">Painel Admin</button>
+      <button id="leaderPanelBtn" class="muted" style="display:none; background-color: #ffd28a;">Painel Líder</button>
+    </div>
+
+    <div id="resultsContainer">
+      <div id="results" style="margin-top:16px;display:none">
+        <h3>Totais necessários</h3>
+        <table>
+          <thead><tr><th>Material</th><th>Quantidade total</th></tr></thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+
+        <h3>Valores Estimados</h3>
+        <table>
+          <thead><tr><th>Produto</th><th>Valor Total</th></th></tr></thead>
+          <tbody id="valuesBody"></tbody>
+          <tfoot>
+            <tr><th>Total Geral</th><th id="valorTotalGeral">R$ 0</th></tr>
+          </tfoot>
+        </table>
+        <p class="result-note" style="font-size: 12px; margin-top: 8px;">Os valores variam conforme o tipo selecionado (limpo, sujo, aliança).</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" id="adminPanel" style="display:none;">
+      <h2>Painel do Administrador (Hierarquia)</h2>
+
+      <h3 style="margin-top: 10px;">Configurar Produtos e Materiais</h3>
+      <p style="font-size: 13px;">
+        Aqui você pode alterar a <strong>lista de materiais por unidade</strong> e os <strong>valores de venda</strong>.
+        As mudanças são salvas no Firebase e entram em vigor para todos.
+      </p>
+      <div style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap;">
+        
+<div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+  <button id="catalogOpenEditorBtn" class="muted">Alterar calculadora</button>
+  <span style="opacity:.75; font-size:12px;">Abre um editor visual para mudar nome do produto, materiais, preços, adicionar e remover produtos (somente admin).</span>
+</div>
+<!-- Editor antigo em JSON foi removido para manter o site simples -->
+
+        <div class="actions" style="margin-top: 6px; width: 100%; justify-content: flex-end;">
+        </div>
+      </div>
+
+      
+      <div class="actions" style="margin-top: 0; margin-bottom: 15px; justify-content: flex-end;">
+          <button id="toggleCalcBtnAdmin" class="muted">Voltar à Calculadora</button>
+      </div>
+      
+      <h3>Status do Servidor</h3>
+      <p style="font-size: 13px;">Usuários online (ativos nos últimos 60s):<div id="adminOnlineList" class="card" style="margin-top:10px;"></div> <strong id="onlineUsersCount">...</strong></p>
+      
+      <h3>Gerenciamento de Usuários</h3>
+      <p style="font-size: 13px;">Altere a permissão de usuários. Você não pode alterar sua própria tag.</p>
+      <div class="history-table-wrapper"> <table id="adminUserTable"> <thead> <tr> <th style="width: 80%;">Usuário / Status</th> <th style="width: 20%;">Ações</th> </tr> </thead> <tbody id="adminUserListBody"> <tr><td colspan="2" style="text-align: center;">Carregando usuários...</td></tr> </tbody> </table> 
+
+      <h3 style="margin-top: 22px;">Painel de Facções (Admin)</h3>
+      <p style="font-size: 13px;">Criar facções, definir líder inicial, ver membros e ranking de vendas. Tudo reservado ao admin.</p>
+
+      <div class="card" style="margin-top:10px;">
+        <h4 style="margin:0 0 10px;">Criar Facção</h4>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <input id="adminFaccaoNome" placeholder="Nome da facção (ex: Cidade dos Anjos)" style="flex:1; min-width:260px; padding:10px; border-radius:10px;">
+          <input id="adminFaccaoTag" placeholder="Tag / abreviação (ex: CDA)" style="width:160px; min-width:160px; padding:10px; border-radius:10px; text-transform:uppercase;">
+          <input id="adminFaccaoLiderNome" placeholder="Líder (nome do usuário)" style="flex:1; min-width:240px; padding:10px; border-radius:10px;" list="userNameSuggestions">
+          <button id="adminCreateFaccaoBtn" class="success">➕ Criar</button>
+        </div>
+</div>
+        <small<small style="opacity:.75;">Se preencher a TAG do líder, ele já entra na facção como <strong>lider</strong>.</small>
+      </div>
+
+      <div class="card" style="margin-top:10px;">
+        <h4 style="margin:0 0 10px;">Facções</h4>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+          <button id="adminReloadFaccoesBtn" class="muted">🔄 Recarregar</button>
+        </div>
+        <div style="overflow:auto;">
+          <table style="width:100%; border-collapse:collapse;">
+            <thead><tr>
+              <th style="text-align:left; padding:8px;">ID</th>
+              <th style="text-align:left; padding:8px;">Nome</th>
+              <th style="text-align:left; padding:8px;">Ações</th>
+            </tr></thead>
+            <tbody id="adminFaccoesTbody"></tbody>
+          </table>
+        </div>
+        <div id="adminFaccaoMembersBox" class="card" style="display:none; margin-top:10px;"></div>
+      </div>
+
+      <div class="card" style="margin-top:10px;">
+        <h4 style="margin:0 0 10px;">Ranking de Vendas por Facção</h4>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+          <button id="adminReloadRankingBtn" class="muted">📊 Atualizar ranking</button>
+        </div>
+        <div style="overflow:auto;">
+          <table style="width:100%; border-collapse:collapse;">
+            <thead><tr>
+              <th style="text-align:left; padding:8px;">Facção</th>
+              <th style="text-align:left; padding:8px;">Qtd vendas</th>
+              <th style="text-align:left; padding:8px;">Total</th>
+            </tr></thead>
+            <tbody id="adminRankingTbody"></tbody>
+          </table>
+        </div>
+      </div>
+</div>
+      <h3 style="margin-top: 20px;">Controles de Layout Global</h3>
+      <p style="font-size: 13px;">Habilitar ou desabilitar recursos para todos os usuários do site em tempo real.</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+          <label style="display: flex; align-items: center; gap: 8px; margin: 0;">
+              <input type="checkbox" id="layoutToggleNightMode" style="width: auto;"> Habilitar o botão "Modo Noturno" para todos
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px; margin: 0;">
+              <input type="checkbox" id="layoutToggleBottomPanel" style="width: auto;"> Ligar "Painel Inferior" para todos
+          </label>
+          <div style="margin-top: 15px;">
+              <label for="bottomPanelText">Mensagem do Painel Inferior:</label>
+              <input type="text" id="bottomPanelText" placeholder="Digite a mensagem para o rodapé aqui">
+              <button id="saveBottomPanelTextBtn" class="primary" style="margin-top: 8px;">Salvar Mensagem</button>
+          </div>
+      </div>
+      <h3 style="margin-top: 20px;">Ações de Dossiê</h3>
+      <p style="font-size: 13px;">Se você tem vendas antigas, clique no botão abaixo UMA VEZ para copiá-las para o novo sistema de Dossiê.</p>
+      <button id="migrateDossierBtn" class="danger" style="animation: none;">Migrar Vendas Antigas para Dossiê</button>
+      <p style="font-size: 13px; margin-top: 15px;">Se você usava o sistema antigo de Carros/Placas (com vírgulas), clique abaixo UMA VEZ para migrar para o novo gerenciador.</p>
+      <button id="migrateVeiculosBtn" class="danger" style="animation: none; background-color: #cc0000;">Migrar Veículos Antigos (Dossiê)</button>
+  </div>
+  
+  <div class="card" id="historyCard" style="display:none">
+      <div id="historyBackground" class="card">
+          <h2>Histórico de Vendas Registradas</h2>
+          <img id="historyImg" src="assets/img/logo-dark.png" alt="Fundo Histórico" width="1037" height="902" decoding="async" fetchpriority="low" loading="lazy">
+          <input type="text" id="filtroHistorico" placeholder="🔍 Pesquisar no histórico (Nome, Data, Item, etc.)" style="margin-bottom: 10px; width: 100%;">
+          <div class="actions">
+              <button id="clearHistoryBtn" class="muted">Limpar Histórico</button>
+              <button id="toggleCalcBtn" class="muted">Voltar à Calculadora</button>
+          </div>
+          <div class="history-table-wrapper"><table id="historicoVendas">
+              <thead>
+                  <tr>
+                      <th>Data/Hora</th>
+                      <th>Cliente</th>
+                      <th>Organização/Tipo</th>
+                      <th>Telefone</th>
+                      <th>Produtos (Unidade)</th>
+                      <th>Valor Total</th>
+                      <th>Negociadoras</th>
+                      <th>Registrado Por</th>
+                      <th>Ações</th>
+                  </tr>
+              </thead>
+              <tbody id="salesHistory"></tbody>
+          </table></div>
+      </div>
+  </div>
+  
+  <div class="card" id="dossierCard" style="display:none">
+      <div id="dossierOrgContainer">
+          <h2>Sistema de Investigação (Bases)</h2>
+          <div class="actions" style="margin-top: 0; margin-bottom: 10px;">
+              <input type="text" id="filtroDossierOrgs" placeholder="🔍 Buscar por Base ou Nome de Pessoa..." style="margin: 0; flex-grow: 1;">
+              <button id="addOrgBtn" class="success" style="animation: none; margin-left: 10px;">+ Adicionar Base</button>
+              <button id="toggleCalcBtnDossier" class="muted">Voltar à Calculadora</button>
+          </div>
+          <div id="dossierOrgGrid" class="dossier-org-grid" style="margin-top: 15px;">
+              <p>Carregando bases...</p>
+          </div>
+      </div>
+      <div id="dossierPeopleContainer" style="display:none;">
+          <div id="dossierPeopleHeader">
+              <h2 id="dossierPeopleTitle">Membros</h2>
+              <button id="dossierVoltarBtn" class="muted">← Voltar para Bases</button>
+          </div>
+          <div class="actions" style="margin-top: 0; margin-bottom: 10px;">
+              <input type="text" id="filtroDossierPeople" placeholder="🔍 Buscar por Nome, Carro ou Placa(s)..." style="margin: 0; flex-grow: 1;">
+              <button id="addPessoaBtn" class="success" style="animation: none; margin-left: 10px;">+ Adicionar Pessoa</button>
+          </div>
+          <div id="dossierPeopleGrid" class="dossier-people-grid" style="margin-top: 15px;">
+              <p>Carregando membros...</p>
+          </div>
+      </div>
+  </div>
+  
+  <div id="toast-container"></div>
+  
+  <div id="bottomPanel">
+      <span id="bottomPanelDisplay">Este é o painel inferior. O conteúdo pode ser personalizado.</span>
+  </div>
+
+  <div id="editDossierOverlay" class="modal-overlay"></div>
+  <div id="editDossierModal" class="card modal-content"> 
+      <h2>Editar Entrada do Dossiê</h2> 
+      <input type="hidden" id="editDossierOrg"> 
+      <input type="hidden" id="editDossierId"> 
+      
+      <label for="editDossierNome">Nome:</label>
+      <input type="text" id="editDossierNome" placeholder="Nome completo da pessoa">
+      
+      <label for="editDossierNumero">Telefone (055):</label>
+      <input type="text" id="editDossierNumero" maxlength="13" placeholder="(055) XXX-XXX">
+      
+      <label for="editDossierCargo">Cargo/Função:</label>
+      <input type="text" id="editDossierCargo" placeholder="Ex: Gerente, Mão Direita">
+      
+      <label for="editDossierInstagram">Instagram (Opcional):</label>
+      <input type="text" id="editDossierInstagram" placeholder="@instagramdapessoa">
+      
+      <label for="editDossierFotoUrl">Link da Foto (URL):</label>
+      <input type="text" id="editDossierFotoUrl" placeholder="URL da foto">
+
+      <hr style="margin: 10px 0;">
+
+      <h3>Veículos Registrados</h3>
+      <ul id="editModalListaVeiculos" style="list-style: none; padding: 0;">
+          <li>Nenhum veículo registrado.</li>
+      </ul>
+
+      <h4>Gerenciar Veículo</h4>
+      <label for="editModalCarroNome">Carro:</label>
+      <input type="text" id="editModalCarroNome" placeholder="Nome do carro">
+      
+      <label for="editModalCarroPlaca">Placa (Chave):</label>
+      <input type="text" id="editModalCarroPlaca" placeholder="Placa do veículo (Ex: HELLS A1)">
+      
+      <label for="editModalCarroFoto">Link da Foto (URL):</label>
+      <input type="text" id="editModalCarroFoto" placeholder="URL da foto do veículo">
+      
+      <div class="actions" style="margin-top: 10px; padding-top: 0; border: none;">
+          <button id="editModalAddVeiculoBtn" class="primary" style="flex-grow: 1;">Salvar/Adicionar Veículo</button>
+          <button id="editModalCancelVeiculoBtn" class="muted" style="flex-grow: 1;">Cancelar Edição</button>
+      </div>
+      <div class="actions" style="margin-top: 20px; border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+          <button id="saveDossierBtn" class="success">Salvar Alterações</button>
+          <button id="cancelDossierBtn" class="danger">Cancelar/Fechar</button>
+      </div>
+  </div>
+  
+  <div id="addDossierOverlay" class="modal-overlay"></div>
+  <div id="addDossierModal" class="card modal-content">
+      <h2>Adicionar Nova Pessoa</h2>
+      <label for="addDossierOrganizacao">Base (Organização):</label>
+      <input type="text" id="addDossierOrganizacao" readonly>
+      
+      <label for="addDossierNome">Nome:</label>
+      <input type="text" id="addDossierNome" placeholder="Nome completo da pessoa">
+      
+      <label for="addDossierNumero">Telefone (055):</label>
+      <input type="text" id="addDossierNumero" maxlength="13" placeholder="(055) XXX-XXX">
+      
+      <label for="addDossierCargo">Cargo/Função:</label>
+      <input type="text" id="addDossierCargo" placeholder="Ex: Gerente, Mão Direita">
+      
+      <label for="addDossierFotoUrl">Link da Foto (URL):</label>
+      <input type="text" id="addDossierFotoUrl" placeholder="URL da foto">
+
+      <hr style="margin: 10px 0;">
+
+      <div id="addDossierVeiculosSection">
+        <h3>Veículos (Opcional)</h3>
+        <ul id="addModalListaVeiculos" style="list-style: none; padding: 0; margin-bottom: 10px;">
+            <li>Nenhum veículo adicionado.</li>
+        </ul>
+        
+        <h4>Adicionar Novo Veículo</h4>
+        <label for="addModalCarroNome">Carro:</label>
+        <input type="text" id="addModalCarroNome" placeholder="Nome do carro">
+        
+        <label for="addModalCarroPlaca">Placa (Chave):</label>
+        <input type="text" id="addModalCarroPlaca" placeholder="Placa do veículo (Ex: HELLS A1)">
+        
+        <label for="addModalCarroFoto">Link da Foto (URL):</label>
+        <input type="text" id="addModalCarroFoto" placeholder="URL da foto do veículo">
+        
+        <div class="actions" style="margin-top: 10px; padding-top: 0; border: none;">
+            <button id="addModalAddVeiculoBtn" class="primary" style="width: 100%;">Adicionar Veículo à Pessoa</button>
+            <button id="addModalCancelVeiculoBtn" class="muted" style="display:none; width: 100%;">Cancelar Edição</button>
+        </div>
+      </div>
+      <div class="actions" style="margin-top: 20px; border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+          <button id="saveNewDossierBtn" class="success">Adicionar Pessoa</button>
+          <button id="cancelNewDossierBtn" class="danger">Cancelar</button>
+      </div>
+  </div>
+  
+  <div id="orgModalOverlay" class="modal-overlay"></div>
+  <div id="orgModal" class="card modal-content" style="max-width: 500px;">
+      <h2 id="orgModalTitle">Editar Organização</h2>
+      <input type="hidden" id="editOrgId">
+      
+      <label for="orgNome">Nome da Organização:</label>
+      <input type="text" id="orgNome" placeholder="Ex: Hells Angels, Nox">
+      
+      <label for="orgFotoUrl">Link da Logo/Foto (URL):</label>
+      <input type="text" id="orgFotoUrl" placeholder="URL da imagem da organização">
+      
+      <label for="orgInfo">Informações da Base:</label>
+      <textarea id="orgInfo" placeholder="Detalhes sobre a base, localização, etc." rows="4"></textarea>
+
+      <div class="actions" style="margin-top: 20px; border-top: 1px solid var(--cor-borda); padding-top: 15px;">
+          <button id="saveOrgBtn" class="success">Salvar</button>
+          <button id="deleteOrgBtn" class="danger" style="display: none;">Excluir</button>
+          <button id="cancelOrgBtn" class="muted">Cancelar</button>
+      </div>
+  </div>
+  
+  <div id="imageLightboxOverlay" class="modal-overlay"></div>
+  <div id="imageLightboxModal">
+      <img id="lightboxImg" src="" alt="Imagem Ampliada">
+  </div>
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  
+  <script type="module" src="dist/script.66cad1edeb.js"></script> 
+  
+
+
+<style>
+  .pwa-update-btn{
+    position:fixed; right:14px; bottom:14px; z-index:9999;
+    padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(20,20,28,.92); color:#fff; font-weight:800; font-size:13px;
+    box-shadow:0 10px 28px rgba(0,0,0,.35);
+    cursor:pointer; display:none; user-select:none;
+  }
+  .pwa-update-btn:hover{ transform:translateY(-1px); }
+</style>
+
+<button id="pwaUpdateBtn" class="pwa-update-btn" type="button" aria-label="Atualizar aplicativo">
+  🔄 Atualizar
+</button>
+
+<script>
+  (function(){
+    if (!("serviceWorker" in navigator)) return;
+
+    const btn = document.getElementById("pwaUpdateBtn");
+    let registration = null;
+
+    function showUpdate(){
+      if (btn) btn.style.display = "block";
+    }
+    function hideUpdate(){
+      if (btn) btn.style.display = "none";
+    }
+
+    function promptIfWaiting(reg){
+      if (reg && reg.waiting) showUpdate();
+    }
+
+    window.addEventListener("load", async () => {
+      try {
+        registration = await navigator.serviceWorker.register("./sw.js");
+        // If there's already a waiting SW (e.g., user reopened the app)
+        promptIfWaiting(registration);
+
+        // Listen for new SW installing
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          if (!newWorker) return;
+          newWorker.addEventListener("statechange", () => {
+            // installed means ready; if there's an existing controller, it's an update
+            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+              showUpdate();
+            }
+          });
+        });
+
+        // Reload once the new SW takes control
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          hideUpdate();
+          window.location.reload();
+        });
+
+      } catch (e) {
+        // ignore
+      }
+    });
+
+    if (btn){
+      btn.addEventListener("click", () => {
+        if (!registration) return;
+        // If there's a waiting worker, tell it to activate now
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        }
+      });
+    }
+  })();
+</script>
+
+
+<style>
+  #pwa-install-btn{
+    position:fixed;
+    left:14px;
+    bottom:14px;
+    z-index:99999;
+    border:0;
+    border-radius:999px;
+    padding:10px 12px;
+    font-weight:800;
+    cursor:pointer;
+    background:rgba(255,255,255,.10);
+    color:#fff;
+    backdrop-filter: blur(10px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    display:none;
+  }
+  #pwa-install-btn:hover{ background:rgba(255,255,255,.16); }
+</style>
+<button id="pwa-install-btn" type="button" aria-label="Instalar aplicativo">📲 Instalar app</button>
+
+
+<script>
+(function(){
+  const btn = document.getElementById("pwa-install-btn");
+  if (!btn) return;
+
+  let deferredPrompt = null;
+
+  // Chrome/Edge: capture install prompt
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    btn.style.display = "block";
+  });
+
+  // Hide if already installed
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    btn.style.display = "none";
+  });
+
+  btn.addEventListener("click", async () => {
+    try{
+      if (!deferredPrompt){
+        // If browser doesn't support programmatic prompt (ex: iOS Safari)
+        alert("Para instalar: no iPhone (Safari) use Compartilhar → Adicionar à Tela de Início. No Android/Chrome, use o menu ⋮ → Instalar app.");
+        return;
+      }
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      btn.style.display = "none";
+    }catch(e){}
+  });
+
+  // If running as installed app, hide button
+  const isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+  if (isStandalone || window.navigator.standalone) {
+    btn.style.display = "none";
+  }
+})();
+</script>
+
+
+  <!-- Painel do Líder (Facção) -->
+  <div id="leaderPanel" class="card" style="display:none; max-width: 1100px; margin: 20px auto;">
+    <h2 style="margin-top:0;">Painel do Líder</h2>
+    <p style="opacity:.85;margin-top:-8px;">Gerencie membros, cargos e permissões da sua facção.</p>
+
+    <div class="card" style="margin-top:14px;">
+      <h3 style="margin:0 0 10px;">Membros da Facção</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px;">
+        <button id="leaderReloadMembersBtn" class="muted">🔄 Recarregar</button>
+        <span id="leaderFaccaoLabel" style="opacity:.85;"></span>
+      </div>
+      <div style="overflow:auto;">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:8px;">TAG</th>
+              <th style="text-align:left; padding:8px;">Nome/Tag</th>
+              <th style="text-align:left; padding:8px;">Cargo</th>
+              <th style="text-align:left; padding:8px;">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="leaderMembersTbody"></tbody>
+        </table>
+      </div>
+      <small style="display:block;opacity:.75;margin-top:8px;">Dica: cargos padrão: lider, gerente, membro, visitante.</small>
+      <div class="card" style="margin-top:12px;">
+        <h4 style="margin:0 0 10px;">Adicionar membro (sua facção)</h4>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <input id="leaderAddMemberNome" placeholder="Nome do usuário" style="flex:1; min-width:260px; padding:10px; border-radius:10px;" list="userNameSuggestions">
+          <select id="leaderAddMemberCargo" style="padding:10px; border-radius:10px;">
+            <option value="gerente">gerente</option>
+            <option value="membro" selected>membro</option>
+            <option value="visitante">visitante</option>
+          </select>
+          <button id="leaderAddMemberBtn" class="primary">➕ Adicionar</button>
+        </div>
+        <small style="opacity:.75;">Isso grava: usuarios/{uid}/faccaoId e faccaoMembros/{faccaoId}/{uid}/cargo</small>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3 style="margin:0 0 10px;">Hierarquia e Permissões</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px;">
+        <input id="newCargoName" placeholder="novo cargo (ex: tesoureiro)" style="flex:1; min-width:220px; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); color:inherit;">
+        <button id="addCargoBtn" class="success">➕ Criar cargo</button>
+        <button id="leaderReloadCargosBtn" class="muted">🔄 Recarregar</button>
+      </div>
+
+      <div id="cargosEditorContainer"></div>
+
+      <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+        <button id="saveCargosBtn" class="primary">💾 Salvar hierarquia</button>
+        <button id="leaderBackBtn" class="muted">⬅ Voltar</button>
+      </div>
+      <small style="display:block;opacity:.75;margin-top:8px;">Ao salvar, o botão “📌 Hierarquia” aparece para sua facção.</small>
+    </div>
+  </div>
+
+  <!-- Hierarquia (visível para a facção) -->
+  <div id="hierarquiaCard" class="card" style="display:none; max-width: 1100px; margin: 20px auto;">
+    <h2 style="margin-top:0;">Hierarquia da Facção</h2>
+    <p style="opacity:.85;margin-top:-8px;">Cargos e responsabilidades definidos pelo líder.</p>
+    <div id="hierarquiaContent" class="card" style="margin-top:12px;"></div>
+    <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+      <button id="hierarquiaBackBtn" class="muted">⬅ Voltar</button>
+    </div>
+  </div>
+
+
+  <datalist id="userNameSuggestions"></datalist>
+
+  <datalist id="userNameSuggestions"></datalist>
+</body>
+</html>
+
