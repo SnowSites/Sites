@@ -1,0 +1,135 @@
+/* Você pode salvar este conteúdo em um arquivo chamado, por exemplo, style.css */
+:root {
+  --cor-fundo: #fff0f6; --cor-texto: #4a0033; --cor-principal: #e60073;
+  --cor-card: #ffffff; --cor-borda: #ffb3d9; --cor-btn-primario: #e60073;
+  --cor-btn-texto: #fff; --cor-btn-secundario: #ffd6eb;
+  --cor-btn-secundario-texto: #4a0033; --cor-erro: #cc0000;
+  --cor-glow-pulsante: rgba(230, 0, 115, 0.8);\
+  --cor-tag-admin: #0056b3; --cor-tag-hells: #e60073; --cor-tag-visitante: #008000; --cor-input-fundo: rgba(0,0,0,0.06); --cor-overlay: rgba(0,0,0,0.65);
+}
+body.dark {
+  --cor-fundo: #1a000d; --cor-texto: #ffccf0; --cor-principal: #ff0080; 
+  --cor-card: #2c001a; --cor-borda: #e60073; --cor-btn-primario: #ff0080; 
+  --cor-btn-texto: #fff; --cor-btn-secundario: #4d002a; 
+  --cor-btn-secundario-texto: #ffccf0; --cor-glow-pulsante: rgba(255, 0, 128, 0.6);
+  --cor-tag-admin: #007bff; --cor-tag-hells: #ff0080; --cor-tag-visitante: #28a745; --cor-input-fundo: rgba(0,0,0,0.18); --cor-overlay: rgba(0,0,0,0.65);
+}
+body.dark input[type=number], body.dark input[type=text], body.dark select,
+body.dark .modal-content input[type=text], body.dark .modal-content textarea,
+body.dark #modalListaVeiculos {
+  background: #33001f; color: var(--cor-texto); border: 1px solid var(--cor-borda);
+}
+.modal-content textarea {
+    width: 100%; box-sizing: border-box; min-height: 80px;
+    padding: 8px; border-radius: 6px; border: 1px solid var(--cor-borda);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[list]:focus, input[list]:hover { border-color: var(--cor-principal) !important; box-shadow: 0 0 5px rgba(230, 0, 115, 0.4); }
+input[list] { position: relative; z-index: 1; }
+input[list]::-webkit-calendar-picker-indicator { display: none; }
+.suggestion-tip { font-size: 11px; color: var(--cor-principal); margin-top: 4px; margin-bottom: 0; font-weight: 500; opacity: 0.8; }
+
+#tour-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); z-index: 10000; opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+#tour-overlay.active { opacity: 1; }
+.tour-tooltip {
+  position: absolute; background: var(--cor-principal); color: var(--cor-btn-texto);
+  padding: 15px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  max-width: 300px; text-align: left; opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease; z-index: 10002;
+}
+.tour-tooltip.active { opacity: 1; transform: translateY(0); }
+.tour-tooltip h4 { margin: 0 0 5px; font-size: 16px; color: var(--cor-btn-texto); }
+.tour-tooltip p { margin: 0; font-size: 14px; margin-bottom: 10px; }
+.tour-tooltip button {
+    background: var(--cor-btn-secundario); color: var(--cor-btn-secundario-texto);
+    padding: 6px 10px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; margin-right: 8px;
+}
+.tour-highlight {
+  position: relative; z-index: 10001; 
+  box-shadow: 0 0 0 3px var(--cor-principal), 0 0 15px var(--cor-principal);
+  border-radius: 6px;
+}
+
+input.input-invalido, select.input-invalido, textarea.input-invalido { 
+    border: 2px solid var(--cor-erro) !important; 
+    box-shadow: 0 0 4px var(--cor-erro); 
+}
+#logoLink { position: fixed; top: 16px; left: 16px; width: auto; max-height: 80px; cursor: pointer; z-index: 9998; }
+.app-logo { max-height: 80px; width: auto; transition: opacity 0.3s ease, filter 0.3s ease; display: block; }
+#appLogo:hover { filter: drop-shadow(0 0 8px var(--cor-principal)) drop-shadow(0 0 15px var(--cor-glow-pulsante)); opacity: 0.9; }
+
+#welcomeLogo { max-width: 80%; max-height: 120px; margin-bottom: 25px; display: block; }
+#welcomeScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: var(--cor-card); z-index: 10000; display: none; 
+  flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; transition: opacity 0.5s ease;
+  padding: 20px; box-sizing: border-box; 
+}
+#welcomeScreen.show { display: flex; }
+#welcomeScreen.hidden { opacity: 0; pointer-events: none; }
+#welcomeScreen h2 { font-size: 36px; margin-top: 10px; margin-bottom: 20px; color: var(--cor-principal); }
+#welcomeScreen button { padding: 12px 24px; font-size: 18px; border-radius: 10px; margin-top: 10px; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 960px; margin: 24px auto; padding: 20px;
+  background: var(--cor-fundo); color: var(--cor-texto);
+  transition: background 0.25s ease, color 0.25s ease, max-width 0.4s ease-in-out;
+}
+body.history-view-active { max-width: 1200px; }
+body.dossier-view-active { max-width: 1200px; }
+
+#mainCard { display: block; }
+h1 { margin: 0; font-size: 24px; font-weight: 700; color: var(--cor-principal); text-align: center; flex-grow: 1; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--cor-principal); }
+h3 { color: var(--cor-principal); font-weight:600; margin-top: 16px; }
+h4 { color: var(--cor-principal); font-weight:600; margin-top: 16px; }
+
+.card {
+  background: var(--cor-card); padding: 18px; border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid var(--cor-borda);
+  margin-bottom: 20px;
+}
+
+.header-container { display:flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 12px; }
+
+.user-status-display {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--cor-btn-texto);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-left: 10px;
+}
+.user-status-display.tag-admin { background-color: var(--cor-tag-admin); }
+.user-status-display.tag-hells { background-color: var(--cor-tag-hells); }
+.user-status-display.tag-visitante { background-color: var(--cor-tag-visitante); }
+
+label { display: block; margin: 10px 0 6px; font-weight: 600; color: var(--cor-principal); }
+input[type=number], input[type=text], select {
+  width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--cor-borda);
+  background: #fff; color: var(--cor-texto); font-size: 14px; box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input[type=number] { width: 140px; }
+
+input#placaVeiculo {
+    text-transform: uppercase;
+}
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+
+/* Para permitir que o container de produtos gere campos dinâmicos sem quebrar o grid */
+.products-grid { display: contents; }
+@supports not (display: contents) {
+  .products-grid { display: grid; grid-template-columns: inherit; gap: inherit; }
+}
+
+
